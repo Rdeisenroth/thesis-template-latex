@@ -1,0 +1,40 @@
+%!TEX root = ../thesis.tex
+%LTEx: enabled=false
+\IfClassLoadedTF{tudapub}{
+    \Metadata{
+        title={Your Very Long Title Containing Many Buzzwords and Acronyms To Make You Sound Smart}, % TODO: adjust title
+        author=Firstname Lastname % TODO: adjust author
+    }
+}{}
+
+\IfClassLoadedTF{beamer}{
+    \title{Your Very Long Title Containing Many Buzzwords and Acronyms To Make You Sound Smart} % TODO: adjust title
+    \subtitle{Colloquium}
+}{
+    \title{Your Very Long Title Containing Many Buzzwords and Acronyms\\To Make You Sound Smart} % TODO: adjust title
+    \subtitle{Some sensible subtitle} %TODO: add subtitle
+}
+\author[F. Lastname]{Firstname Lastname}
+\IfClassLoadedTF{tudapub}{
+    \birthplace{Hanau, Deutschland}% Usually only required for PhD theses % TODO: adjust birthplace
+    \reviewer{B. Scheuert\and M. Mustermann} % TODO: adjust reviewers
+    \dedication{
+        This thesis is dedicated to my supervisors, Bernd Scheuert and Max Mustermann, whose guidance and support have been invaluable throughout this journey. I am deeply grateful to my family and friends for their constant support and motivation in making this project a reality. Finally, I would like to thank all the proofreaders who helped me put the finishing touches on this thesis.
+    } % TODO: adjust dedication
+}{}
+
+
+% The following elements will be placed on the title page.
+% \department is a required date. See full tudapub documentation for details.
+\IfClassLoadedTF{tudapub}{
+    \department{inf}% If defined the shorthand will be replaced by the full name otherwise it's used directly
+}{
+    \department{FB 20 -- Computer Science $\vert$ Fachgebiet Algorithmik} % TODO: adjust department
+}
+% \institute{Institute}
+\IfClassLoadedTF{tudapub}{
+    \group{Algorithmik} % TODO: adjust group
+
+    \submissiondate{January 01, 2025} %TODO: adjust submission date
+    \examdate{January 01, 2025} %TODO: adjust exam date
+}{}

@@ -1,0 +1,67 @@
+\documentclass[../thesis.tex]{subfiles}
+
+% Get Labels from the Main Document using the xr-hyper Package
+\externaldocument[ext:]{\subfix{thesis}}
+\graphicspath{{\subfix{pictures/}}}
+
+
+\begin{document}
+
+    \chapter{Methods}\IMRADlabel{methods}\label{ch:methods}
+    In this chapter, we will examine the technical details of our implementation. We will start by describing the target user groups, the architecture of the project and the frameworks used. We will then describe the API of the project and how the individual components interact with each other. Finally, we will describe the key implementation details of the project, focusing on the Operator and the Grader.
+
+    Let's also include some figures:
+
+    % Standalone LaTeX figure
+    \begin{figure}[ht!]
+        \centering
+        \includestandalone{user-groups-kiviat-diagram} % this breaks the subfile package for some reason
+        \caption{Kiviat diagram showing the skills of the different user groups expected to use the system}
+        \label{fig:user-groups-kiviat-diagram}
+    \end{figure}
+    \FloatBarrier{}
+
+    As illustrated in \autoref{fig:user-groups-kiviat-diagram}, the system is designed to be used by three different user groups: ...
+    % Regular picture
+    \begin{figure}[ht!]
+        \centering
+        \includegraphics[width=0.5\textwidth]{example-image}
+        \caption{A sample image}
+        \label{fig:sample-image}
+    \end{figure}
+
+    Let's also create a fancy table:
+    \begin{table}[ht]
+        \centering
+        \begin{tabularx}{.5\textwidth}{|l|l|X|}
+            \toprule
+            \textbf{\textsf{Header 1}} & \textbf{\textsf{Header 2}} & \textbf{\textsf{Header 3}} \\
+            \midrule
+            O                          & X                          & O                          \\
+            X                          & O                          & X                          \\
+            O                          & X                          & O                          \\
+            \bottomrule
+        \end{tabularx}
+        \caption{Fancy example table spanning exactly half the text width}
+        \label{tab:example-table}
+    \end{table}
+
+    And finally, some code Blocks:
+
+    \begin{codeBlock}*[fontsize=\scriptsize][custom text for list of code blocks]{minted language=python, title=\codeBlockTitle{Python Code Block}}
+        def hello_world():
+            print("Hello, World!")
+
+        hello_world()
+    \end{codeBlock}
+
+    Same thing but from a file:
+    \inputCode*[fontsize=\scriptsize,firstline=2,lastline=5][HelloWorld.py - helloWorld()]{title=\codeBlockTitle{HelloWorld.py}, minted language=typescript}{code/HelloWorld.py}
+
+    % todo: Methods
+
+    % Print the bibliography if this is a standalone document
+    \ifSubfilesClassLoaded{%
+        \printbibliography{}%
+    }{}
+\end{document}

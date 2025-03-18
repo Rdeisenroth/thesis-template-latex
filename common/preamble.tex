@@ -1,0 +1,40 @@
+%%
+% !TeX root = ../thesis.tex
+% LTEx: enabled=false
+%%
+% Enable PDF/A via pdfmanagement and no longer via pdfx
+\DocumentMetadata{
+    pdfstandard=a-2b,
+    pdfversion=1.7,% 2.0 is possible as well, but some validators don't support that yet
+}
+\RequirePackage[%
+    boxarc,%
+    caption_workaround,%
+    minted_workaround,%
+    fancy_row_color% enable alternating row colors in tables % TODO: remove this if you don't want it
+]{algo-common} % my own utility package. This has to be loaded before tudapub for colorspace compatibility
+
+\documentclass[
+    USenglish,% main language as a global option
+    accentcolor=9c,% Choose accent color: For a list of available colors see the full tudapub documentation
+    class=report,% Choose the base document class. Will choose the matching KOMA-Script class
+    ruledheaders=section,% section levels above this one will follow the ruled layout
+    thesis={
+        type=bachelor,
+        hide-architecture-note, % hide architecture note, this is a CS thesis
+    },% Thesis, for PhD thesis have a look at the DEMO-TUDaPhd example file
+    custommargins=true, % do not use small margins; the computer science department does not want this
+    marginpar=false,% toggle marginpar
+    %	BCOR=5mm,% Binding correction
+    parskip=half-,% use a parskip instead of indent, see KOMA-Script documentation
+    fontsize=11pt,% basic font size, CI default setting of 9pt is too small for theses
+    %	logofile=example-image, % In case logo files are not available
+    % pdfa=true,             % TUBaMa requires PDF/A's
+]{tudapub}
+\RequirePackage{import}
+\subimport{.}{packages}
+\subimport{.}{macros}
+\subimport{.}{style}
+\subimport{.}{metadata}
+
+\graphicspath{{pictures//}}

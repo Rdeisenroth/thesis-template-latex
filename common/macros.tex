@@ -1,0 +1,111 @@
+\tikzset{
+    sffont/.style={font=\sffamily},
+    base/.style={
+        sffont,
+        thick,
+        rounded corners=2pt,
+    },
+    scnode/.style={
+        base,
+        rectangle,
+        draw,
+        fill=\thepagecolor,
+        align=center,
+        minimum height=1cm,
+        minimum width=1cm,
+    },
+    legend/.style={fill=fgcolor!\IfDarkModeTF{10}{5}!\thepagecolor,anchor=north east,align=left,rounded corners=2pt},
+}
+
+\makeatletter
+% taken from pgf manual
+\pgfdeclareshape{document}{
+    \inheritsavedanchors[from=rectangle] % this is nearly a rectangle
+    \inheritanchorborder[from=rectangle]
+    \inheritanchor[from=rectangle]{center}
+    \inheritanchor[from=rectangle]{north}
+    \inheritanchor[from=rectangle]{south}
+    \inheritanchor[from=rectangle]{west}
+    \inheritanchor[from=rectangle]{east}
+    % ... and possibly more
+    \backgroundpath{% this is new
+        % store lower right in xa/ya and upper right in xb/yb
+        \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+        \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+        % compute corner of ``flipped page''
+        \pgf@xc=\pgf@xb \advance\pgf@xc by-5pt % this should be a parameter
+        \pgf@yc=\pgf@yb \advance\pgf@yc by-5pt
+        % construct main path
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yc}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+        \pgfpathclose
+        % add little corner
+        \pgfpathmoveto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yc}}
+        \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    }
+}
+
+\ExplSyntaxOn
+% sets the given sequence to the list of paths in \Ginput@path
+\cs_new:Nn \set_from_ginput_path_seq:N {
+    \seq_clear_new:N #1
+    \tl_map_inline:Nn \Ginput@path {
+        \tl_if_blank:eF { ##1 } { \seq_put_right:Nn #1 { ##1 } }
+    }
+}
+
+% Check if file exists in the graphics path
+\prg_new_conditional:Npnn \file_if_exist_in_graphicspath:n #1 { p, T, F, TF } {
+    \set_from_ginput_path_seq:N \l_file_search_path_seq
+    \file_if_exist:nTF { #1 } { \prg_return_true: } { \prg_return_false: }
+}
+
+\cs_set_eq:NN \IfFileExistsInGraphicsPathTF \file_if_exist_in_graphicspath:nTF
+\cs_set_eq:NN \IfFileExistsInGraphicsPathT \file_if_exist_in_graphicspath:nT
+\cs_set_eq:NN \IfFileExistsInGraphicsPathF \file_if_exist_in_graphicspath:nF
+
+% % Check if the extension of the file is in the list of known extensions
+% \prg_new_conditional:Npnn \file_is_graphics:n #1 { p, T, F, TF } {
+%     \set_from_ginput_path_seq:N \l_file_search_path_seq
+%     \tl_clear_new:N \l_file_full_name_tl
+%     \file_get_full_name:nN { #1 } \l_file_full_name_tl
+%     \file_parse_full_name:nNNN { \l_file_full_name_tl } \l_file_path_tl \l_file_base_tl \l_file_extension_tl
+%     \par ext:\tl_to_str:N \l_file_extension_tl \par
+%     % \exp_args:Nox \clist_if_in:nnTF {\Gin@extensions} {\l_file_extension_tl} { \prg_return_true: } { \prg_return_false: }
+% }
+
+% \cs_set_eq:NN \IfFileIsGraphicsTF \file_is_graphics:nTF
+% \cs_set_eq:NN \IfFileIsGraphicsT \file_is_graphics:nT
+% \cs_set_eq:NN \IfFileIsGraphicsF \file_is_graphics:nF
+\ExplSyntaxOff
+\makeatother
+
+% Add a note from the editor to the proof-reader(s)
+% #1: the note
+\newcommand{\editornote}[1]{\todo[color=TUDa-1a!80]{#1}}
+\IfClassLoadedTF{beamer}{
+    \newcommand\boldimpact[1]{\centering\huge\vskip\fill\fatsf{\textcolor{.}{#1}\vskip\fill}}
+    \newcommand\impact[1]{\centering\huge\vskip\fill\textcolor{.}{#1}\vskip\fill}
+    \DeclareDocumentCommand{\urlslide}{om}{
+        \begin{frame}[c]
+            \slidehead{}
+            \begin{figure}
+                \centering
+                \qrcode[height=3cm]{#2}
+                \caption{\IfNoValueF{#1}{#1\\}\url{#2}}
+            \end{figure}
+        \end{frame}
+    }
+}{}
+
+% command to change style of single row in tabular
+\newcolumntype{$}{>{\global\let\currentrowstyle\relax}}
+\newcolumntype{^}{>{\currentrowstyle}}
+\newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1}%
+    #1\ignorespaces
+}

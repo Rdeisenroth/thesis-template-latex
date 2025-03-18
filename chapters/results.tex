@@ -1,0 +1,15 @@
+\documentclass[../thesis.tex]{subfiles}
+
+% Get Labels from the Main Document using the xr-hyper Package
+\externaldocument[ext:]{\subfix{thesis}}
+
+\begin{document}
+
+    \chapter{Results}\IMRADlabel{results}\label{ch:results}
+    %TODO: Results
+
+    % Print the bibliography if this is a standalone document
+    \ifSubfilesClassLoaded{%
+        \printbibliography{}%
+    }{}
+\end{document}

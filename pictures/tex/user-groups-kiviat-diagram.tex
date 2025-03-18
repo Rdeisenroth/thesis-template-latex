@@ -1,0 +1,64 @@
+\documentclass[tikz]{standalone}
+\def\mainPath{../../}
+\RequirePackage{import}
+\subimport{\mainPath/common}{packages}
+\subimport{\mainPath/common}{macros}
+\subimport{\mainPath/common}{style}
+
+\graphicspath{{\mainPath/pictures/}}
+% color fix for dark mode
+\IfDarkModeT{%
+    \selectcolormodel{cmyk}
+}
+% Kiviat diagram showing the skills of the different user groups expected to use the system. We have three main user groups: Admin, Instructor and Student. Each user group has a set of skills that are relevant to the system. The skills are: Programming, Statistics, Data Analysis, Machine Learning, and System Administration. The skills are rated from 0 to 5, where 0 is no knowledge and 5 is expert knowledge. The diagram is divided into three sections, one for each user group. The skills are represented by the vertices of the diagram, and the rating is represented by the distance from the center of the diagram. The diagram is color-coded to show the different user groups.
+\begin{document}
+    \begin{tikzpicture}
+        \colorlet{latticecolor}{fgcolor!\IfDarkModeTF{40}{30}!\thepagecolor}
+        \colorlet{admincolor}{TUDa-3\IfDarkModeTF{b}{c}}
+        \colorlet{instructorcolor}{TUDa-9\IfDarkModeTF{b}{c}}
+        \colorlet{studentcolor}{\IfDarkModeTF{TUDa-6a}{TUDa-11a}}
+        \tkzKiviatDiagram[
+            lattice=5, % number of levels
+            radial=5, % number of vertices
+            label space=1.8, % space for labels
+            gap=.5, % gap between levels
+            lattice style/.append style={draw=latticecolor},
+            label style/.append style={font=\sffamily, text width=5cm},
+            step=1, % one step amounts to x vertices
+            rotate=18, % rotate the diagram to make it look better
+        ]{Programming, LMS Usage, System administration, IT Security, Test Development}
+        % Admin
+        \tkzKiviatLine[
+            thick,
+            color=admincolor,
+            mark=*,
+            every mark/.append style={mark size=1.5pt,fill=admincolor},
+            opacity=.2,
+            fill=admincolor,
+        ](1,1,5,2.5,1)
+        % Instructor
+        \tkzKiviatLine[
+            thick,
+            color=instructorcolor,
+            mark=*,
+            every mark/.append style={mark size=1.5pt,fill=instructorcolor},
+            opacity=.2,
+            fill=instructorcolor,
+        ](5,4,1,1.5,5)
+        % Student
+        \tkzKiviatLine[
+            thick,
+            color=studentcolor,
+            mark=*,
+            every mark/.append style={mark size=1.5pt,fill=studentcolor},
+            opacity=.2,
+            fill=studentcolor,
+        ](1.5,2,0,0,0)
+        % legend
+        \node[legend,font=\sffamily] at ([shift={(-1ex,-1ex)}]current bounding box.north east){
+            \textcolor{admincolor}{\makebox[1.5em][l]{\tikz{\node{\pgfuseplotmark{*}};}}Admin}\\%
+            \textcolor{instructorcolor}{\makebox[1.5em][l]{\tikz{\node{\pgfuseplotmark{*}};}}Instructor}\\%
+            \textcolor{studentcolor}{\makebox[1.5em][l]{\tikz{\node{\pgfuseplotmark{*}};}}Student}
+        };
+    \end{tikzpicture}
+\end{document}

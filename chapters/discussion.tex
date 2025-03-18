@@ -1,0 +1,25 @@
+\documentclass[../thesis.tex]{subfiles}
+
+% Get Labels from the Main Document using the xr-hyper Package
+\externaldocument[ext:]{\subfix{thesis}}
+
+\begin{document}
+
+    \chapter{Discussion}\IMRADlabel{discussion}\label{ch:discussion}
+    In this chapter, we will discuss the results and implications of our system, which we have outlined in previous chapter. We will also address the research questions that were posed in the introduction.
+
+    \section{Feature Comparison between Existing Tools and Our System}\label{sec:feature-comparison}
+    Let us briefly revisit \href{RQ1.1}{Research Question 1.1} and compare the features of the existing tools to our system. The main drawbacks of existing tools in comparison to our system are the lack of support for ...
+    \lipsum[1]
+
+    \section{Future Work}\label{sec:future-work}
+    % \subsection{Scalability}
+
+    % \subsection{Integration}
+    % \subsection{Security}
+    % TODO: Discussion
+    % Print the bibliography if this is a standalone document
+    \ifSubfilesClassLoaded{%
+        \printbibliography{}%
+    }{}
+\end{document}

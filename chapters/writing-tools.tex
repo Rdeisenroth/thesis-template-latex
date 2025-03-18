@@ -1,0 +1,25 @@
+\documentclass[../thesis.tex]{subfiles}
+
+% Get Labels from the Main Document using the xr-hyper Package
+\externaldocument[ext:]{\subfix{thesis}}
+
+\begin{document}
+    % My professor really wanted this in here and assured me the usage of these tools is fine. However, I would recommend checking with your professor if you want to include this in your thesis, or whether you are allowed to use these tools.
+    % TODO: Adjust or remove writing tools as needed
+    \chapter*{Writing Tools}
+    During the writing and review process, I used a variety of tools to improve the quality of the text. Some of these tools use natural language processing to provide suggestions for the sake of improving the text. For transparency, I have listed the tools I used below:
+    \begin{description}
+        \item[Grammarly] Grammarly is a writing assistant that provides suggestions for improving the grammar, punctuation, and style of the text. It has been used to check spelling and grammar.
+        \item[DeepL Write] DeepL Write is a writing assistant that provides suggestions for improving the style and readability of the text. It was used to improve the readability of the text.
+        \item[Github Copilot] Github Copilot is an AI-powered code completion tool that provides suggestions for writing code. It was used to help with the graphics and to help find the right words for the text.
+    \end{description}
+
+    I would like to thank the developers of these tools for creating such useful tools that helped me improve the quality of the text.
+
+    I hereby declare that I have used these tools in accordance with the guidelines provided by the university and accept full responsibility for the content of the text.
+
+    % Print the bibliography if this is a standalone document
+    \ifSubfilesClassLoaded{%
+        \printbibliography{}%
+    }{}
+\end{document}

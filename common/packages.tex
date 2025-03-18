@@ -1,0 +1,92 @@
+%!TEX root = ../thesis.tex
+%%%%%%%%%%%%%%%%%%%
+% Language setup
+%%%%%%%%%%%%%%%%%%%
+\IfClassLoadedTF{beamer}{}{
+    \usepackage[
+        main=USenglish,  % main language is US English
+        ngerman,         % secondary is German (for the affidavit)
+    ]{babel}
+}
+
+\usepackage{microtype} % better typography, only needed for lualatex
+% \usepackage{currfile}  % get the current file name
+
+%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%
+\usepackage[
+    % backend=biber, % use biber as backend
+    style=numeric-comp,  % compact citation mode, e.g., [1-4] instead of [1, 2, 3, 4]
+    sorting=nyt, % sort by name, year, title
+]{biblatex} % bibliography
+
+\addbibresource{common/refs.bib}
+
+
+%%%%%%%%%%%%%%%%%%%
+% Math
+%%%%%%%%%%%%%%%%%%%
+\usepackage{mathtools}  % basic tools, includes amsmath and must be loaded first
+\usepackage{amsmath}    % basic mathematical symbols
+\usepackage{amssymb}    % extended mathematical symbols
+\usepackage{amsthm}     % theorems
+\usepackage{siunitx}    % units and number typesetting
+\usepackage{bm}         % bold math, also for Greek letters
+\usepackage{bbm}        % blackboard bold for numbers
+
+%%%%%%%%%%%%%%%%%%%
+% References
+%%%%%%%%%%%%%%%%%%%
+\usepackage{standalone}
+\usepackage{subfiles}
+\usepackage{import}
+\usepackage{hyperref}              % basic references
+\usepackage[capitalize]{cleveref}  % better references
+\usepackage{etoolbox}
+\usepackage{xr}                    % cross-referencing between documents
+
+%%%%%%%%%%%%%%%%%%%
+% Tables
+%%%%%%%%%%%%%%%%%%%
+%\usepackage{array}     % Basispaket für Tabellenkonfiguration, wird von den folgenden automatisch geladen
+\usepackage{tabularx}   % Tabellen, die sich automatisch der Breite anpassen
+%\usepackage{longtable} % Mehrseitige Tabellen
+%\usepackage{xltabular} % Mehrseitige Tabellen mit anpassbarer Breite
+\usepackage{booktabs}   % Verbesserte Möglichkeiten für Tabellenlayout über horizontale Linien
+\usepackage{tcolorbox}
+
+%%%%%%%%%%%%%%%%%%%
+% TU-Pkgs
+%%%%%%%%%%%%%%%%%%%
+\usepackage{tudafonts}
+\usepackage{tudacolors}
+
+
+%%%%%%%%%%%%%%%%%%%
+% Other packages
+%%%%%%%%%%%%%%%%%%%
+\usepackage{algo-common}
+\usepackage{fontawesome5}
+\usepackage{placeins}
+\usepackage{adjustbox}
+% load enumitem only if beamer class is not loaded
+\IfClassLoadedTF{beamer}{}{
+    \usepackage{enumitem}
+    \usepackage[autostyle]{csquotes}% \enquote, to simplify use of quotation marks
+}
+\usepackage{subcaption}
+\usepackage{fvextra}
+\IfDarkModeTF{
+    \usemintedstyle{native}
+}{
+    \usemintedstyle{tango}
+}
+\usepackage{svg} % include SVGs
+\usepackage{todonotes} % add todo notes
+\setuptodonotes{inline,color=TUDa-8a!80}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{3d, angles, animations, arrows, arrows.meta, arrows.spaced, automata, babel, backgrounds, bending, calc, calendar, chains, circuits.ee.IEC, circuits.logic.CDH, circuits.logic.IEC, circuits.logic.US, datavisualization, datavisualization.formats.functions, datavisualization.polar, decorations, decorations.footprints, decorations.fractals, decorations.markings, decorations.pathmorphing, decorations.pathreplacing, decorations.shapes, decorations.text, er, external, fadings, fit, fixedpointarithmetic, folding, fpu, graphs, graphs.standard, intersections, lindenmayersystems, math, matrix, patterns, patterns.meta, perspective, petri, plotmarks, positioning, quotes, rdf, scopes, shadings, shadows, shadows.blur, shapes, shapes.arrows, shapes.callouts, shapes.gates.logic.IEC, shapes.gates.logic.US, shapes.geometric, shapes.misc, shapes.multipart, shapes.symbols, spy, svg.path, through, tikzmark, topaths, trees, turtle, views}
+\usepackage{extra_pkg/tkz-kiviat} % Kiviat diagrams
+\usepackage{makecell} % multi-line cells in tables
+\usepackage{lipsum} % dummy text

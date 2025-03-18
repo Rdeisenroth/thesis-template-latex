@@ -1,0 +1,103 @@
+# LaTeX document build workflow
+
+name: build
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events for all branches
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # automatically cancel the workflow if it runs longer than 10 minutes
+    timeout-minutes: 10
+    # The docker image to use for the container
+    container:
+      image: ghcr.io/tudalgo/algotex:latest # this one has the TUDA-Logo already installed, but you can use any other image and install the logo yourself
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # 1. Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+
+      # 2. Build the document
+      - name: "Build the document"
+        run: |
+          make -j
+          mv build/*.pdf .
+
+      # 3. Upload artifacts to GitHub
+      - name: Upload artifacts to GitHub
+        #if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: PDF
+          path: "*.pdf"
+          if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
+  # The following step deploys the PDF to Nextcloud via WebDAV. The new NextHessenbox should work perfectly fine with this. The idea is to generate one link, where your reviewers can always find the latest version of your thesis.
+  # deploy:
+  #   if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push' }}
+  #   # The type of runner that the job will run on
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   # Steps represent a sequence of tasks that will be executed as part of the job
+  #   steps:
+  #     # 1. Download the artifact
+  #     - name: Save pdf file
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: PDF
+  #         path: .
+  #     # 2. Upload Sheet to Nextcloud via WebDAV
+  #     - name: Upload Sheet to Nextcloud via WebDAV
+  #       run: |
+  #         for file in *.pdf; do
+  #           echo "Uploading $file to Nextcloud"
+  #           curl -T $file -u ${{ secrets.NC_WEBDAV_USERNAME }}:${{ secrets.NC_WEBDAV_PW }} ${{ secrets.NC_WEBDAV_URL }}/$file
+  #         done
+  #         echo "Upload complete"
+  check-pdfa:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    needs: build
+    # Steps represent a sequence of tasks that will be executed
+    steps:
+      # 1. Set up Git repository
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+      # 2. Download the artifact
+      - name: Save pdf file
+        uses: actions/download-artifact@v4
+        with:
+          name: PDF
+      # 3. Install Java
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '21'
+      # 4. Install veraPDF
+      - name: Install veraPDF
+        run: |
+          wget https://software.verapdf.org/rel/verapdf-installer.zip
+          wget -O auto-install.xml https://aur.archlinux.org/cgit/aur.git/plain/auto-install.xml?h=verapdf
+          unzip verapdf-installer.zip
+          cd verapdf-greenfield*/
+          ./verapdf-install ../auto-install.xml
+          cd ..
+          sudo ln -s /usr/share/verapdf/verapdf /usr/bin/verapdf
+          sudo ln -s /usr/share/verapdf/verapdf-gui /usr/bin/verapdf-gui
+      # 5. Check and create summary
+      - name: Process files and display report
+        run: .github/verapdf-to-markdown.sh >> $GITHUB_STEP_SUMMARY

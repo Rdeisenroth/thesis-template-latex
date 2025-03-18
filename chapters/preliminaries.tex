@@ -1,0 +1,24 @@
+\documentclass[../thesis.tex]{subfiles}
+
+% Get Labels from the Main Document using the xr-hyper Package
+\externaldocument[ext:]{\subfix{thesis}}
+\graphicspath{{\subfix{pictures/}}{\subfix{pictures/tex/}}}
+
+\begin{document}
+
+    \chapter{Preliminaries}\label{ch:preliminaries}
+    %TODO: Preliminaries
+    In this chapter, we discuss the necessary background information for understanding the following chapters. We will start by defining the necessary terms and notations, followed by .... Finally, we will discuss the challenges of ....
+    \lipsum[1-2]
+    \section{Definitions and Notations}
+    To show the bibliography table at the end, let me quickly cite a reference. For example we use \cite{docker} to deploy \cite{moodle}, as it is the LMS that has found the greatest adoption across German universities\cite{statisa-LMS-market-share-germany-2024}.
+
+    \section{Challenges}
+
+    % TODO: Preliminaries
+
+    % Print the bibliography if this is a standalone document
+    \ifSubfilesClassLoaded{%
+        \printbibliography{}%
+    }{}
+\end{document}

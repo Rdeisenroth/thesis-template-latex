@@ -1,0 +1,47 @@
+%!TEX root = thesis.tex
+%!TeX program = lualatex
+%!TeX encoding = UTF-8
+%!TeX spellcheck = en_US
+\RequirePackage{import}
+\subimport{common}{preamble}
+
+\graphicspath{{\subfix{pictures/}}{\subfix{pictures/tex}}}
+
+\begin{document}
+
+    %\tuprints{urn=XXXXX,printid=XXXX,year=2022,license=cc-by-4.0}% License information for TUprints
+
+    \maketitle{}
+
+    \subfile{chapters/abstract}
+    \subfile{chapters/writing-tools}
+    \subfile{chapters/affidavit}
+
+    \tableofcontents{}
+
+    \subfile{chapters/introduction}
+    \subfile{chapters/preliminaries}
+    \subfile{chapters/related-work}
+    \subfile{chapters/methods}
+    \subfile{chapters/results}
+    \subfile{chapters/discussion}
+    \subfile{chapters/conclusion}
+
+    \subfile{chapters/appendix}
+    \clearpage{}\phantomsection
+    \addcontentsline{toc}{chapter}{\listtablename}
+    \listoftables
+
+    \clearpage{}\phantomsection
+    \addcontentsline{toc}{chapter}{\listfigurename}
+    \listoffigures
+
+    % You can also add the list of code listings if needed.
+    \clearpage{}\phantomsection
+    \addcontentsline{toc}{chapter}{List of Code Blocks}
+    \listofcodeblocks
+
+    \clearpage{}
+    \printbibliography{}
+
+\end{document}

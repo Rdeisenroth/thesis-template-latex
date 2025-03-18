@@ -1,0 +1,385 @@
+% !TeX root = presentation.tex
+\documentclass[
+    USenglish,
+    accentcolor=9c,
+    % dark_mode, % uncomment for dark mode
+    fontsize= 12pt,
+    a4paper,
+    aspectratio=169,
+    colorback=true,
+    fancy_row_colors,
+    leqno,
+    fleqn,
+    boxarc=3pt,
+    fleqn,
+    main,
+    design=2008, % TODO: comment this line, if you want to use the new design
+    % shell_escape = false, % Kompatibilität mit sharelatex
+]{algoslides}
+\RequirePackage{import}
+\subimport{common}{packages}
+\subimport{common}{macros}
+\subimport{common}{style}
+\subimport{common}{metadata}
+\graphicspath{{pictures/}{pictures/tex/}}
+\date{January 01, 2025}
+\titlegraphic{\includegraphics[width=\width,height=\height]{example-image-a}}
+\begin{document}
+    % TODO: replace with actual presentation content
+    \maketitle{}
+
+    % eye catching image
+    \begin{frame}
+        \slidehead{}
+        \vspace{-2em}
+        \begin{figure}
+            \centering
+            \includegraphics[height=.6\paperheight]{example-image-b}
+            \caption{Eyecatching image, source: \href{https://www.example.com/images/something}{Website Name}}
+            \label{fig:paperwork-horror}
+        \end{figure}
+    \end{frame}
+    \section*{Structure}
+    \begin{frame}[c]
+        \slidehead{}
+        \tableofcontents[hideothersubsections]{}
+    \end{frame}
+
+    \section{Introduction}
+
+    \subsection{Problem Statement}
+    \begin{frame}
+        \slidehead{}
+        Research Questions
+        \begin{itemize}
+            \item RQ1
+                \begin{itemize}
+                    \item RQ1.1
+                    \item ...
+                \end{itemize}
+        \end{itemize}
+        some text
+    \end{frame}
+
+    \subsection{Motivation}
+    \begin{frame}
+        \slidehead{}
+        \begin{columns}
+            \begin{column}{.5\textwidth}
+                General motivation
+                \begin{itemize}
+                    \item blah
+                    \item blub
+                \end{itemize}
+            \end{column}
+            \begin{column}{.5\textwidth}
+                Personal motivation
+                \begin{itemize}
+                    \item foo
+                    \item bar
+                    \item baz
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    \end{frame}
+
+    \subsection{Drawbacks of Existing Tools}
+    \begin{frame}
+        \slidehead{}
+        Existing tools have at least one of the following drawbacks:
+        \begin{itemize}
+            \item mee
+            \item moo
+            \item maa
+        \end{itemize}
+
+        $\Rightarrow$Our platform aims to address these issues.
+    \end{frame}
+
+    \section{Methodology}
+    \subsection{Architecture}
+    \begin{frame}[c]
+        \slidehead{}\vspace{-1em}
+        \begin{figure}
+            \centering
+            \includestandalone[scale=.8]{pictures/tex/project-architecture}
+            \caption{Project Architecture}
+            \label{fig:project-architecture}
+        \end{figure}
+    \end{frame}
+    \subsection{Job Queue}
+    \begin{frame}
+        \slidehead{}
+        \vspace{-2em}
+        \begin{figure}
+            \centering
+            % \includestandalone[height=.6\paperheight]{pictures/tex/operator-job-queue}
+            \begin{adjustbox}{totalheight=.6\paperheight}
+                \tikzset{
+                    archnode/.style={draw,rectangle, minimum size=1cm, text width=1cm, align=center,font=\sffamily},
+                    jobnode/.style={archnode, shape=document},
+                    runnerscloud/.style={
+                        archnode,
+                        shape=cloud,
+                        cloud puffs=15,
+                        text width=3cm,
+                        text height=3cm,
+                        thick,
+                        % split in four parts with dashed lines
+                        append after command={%
+                            \pgfextra{
+                                \draw[dashed, shorten >=.5pt,shorten <=.5pt] (\tikzlastnode.north) -- (\tikzlastnode.south);
+                                \draw[dashed, shorten >=.5pt,shorten <=.5pt] (\tikzlastnode.west) -- (\tikzlastnode.east);
+                            }
+                        }
+                    },
+                    runner/.style={archnode, very thick,text width=1.5cm, minimum height=1.5cm, font=\small},
+                    resultsnode/.style={archnode, text width=2cm, minimum height=1.5cm},
+                }
+                \def\funnelwidth{1cm}
+                \def\runnercenterdist{1mm}
+                \def\idlecolor{TUDa-1\IfDarkModeTF{a}{b}}
+                \def\runningcolor{TUDa-3\IfDarkModeTF{a}{c}}
+                \begin{tikzpicture}[thick,node distance=.5cm]
+                    % jobs queue
+                    \node[jobnode](Job-1){\textrm{B}\\[.5ex]\faFlask{}\\[.5ex]Job 1};
+                    \node[jobnode,right=of Job-1](Job-2){\textrm{A}\\[.5ex]\faFlask{}\\[.5ex]Job 2};
+                    \node[jobnode,right=of Job-2](Job-3){\textrm{A}\\[.5ex]\faFlask{}\\[.5ex]Job 3};
+                    \node[jobnode,right=of Job-3](Job-4){\textrm{A}\\[.5ex]\faFlask{}\\[.5ex]Job 4};
+                    \node[jobnode,right=of Job-4](Job-5){\textrm{C}\\[.5ex]\faFlask{}\\[.5ex]Job 5};
+                    \node[right=of Job-5,inner sep=0pt,outer sep=0pt](MoreJobs){\faEllipsisH{}};
+
+                    % \draw[Latex-] ([xshift=-.3cm]Job-1.west) -- node[above]{Queue} ++(-1cm,0cm);
+
+                    \coordinate (PipelineFunnelEnd) at ([yshift=-2cm]$(Job-1)!.2!(MoreJobs)$);
+
+                    % runners cloud
+                    \node[runnerscloud,below right=2cm and 3cm of PipelineFunnelEnd](runnersCloud){};
+                    \node[above=1ex of runnersCloud,align=left](RunnersLabel){\makebox[1.5em][l]{\faCloud{}}Runners Space};
+                    \node[runner,anchor=south east,\idlecolor] at ([shift={(-\runnercenterdist,\runnercenterdist)}]runnersCloud.center){\textrm{A}\\[.5ex]\faServer{}\\[.5ex]Runner 1};
+                    \node[runner,anchor=south west,\runningcolor] at ([shift={(\runnercenterdist,\runnercenterdist)}]runnersCloud.center){\textrm{A}\\[.5ex]\faServer{}\\[.5ex]Runner 2};
+                    \node<2->[runner,anchor=north east,\idlecolor] at ([shift={(-\runnercenterdist,-\runnercenterdist)}]runnersCloud.center){\textrm{B}\\[.5ex]\faServer{}\\[.5ex]Runner 3};
+                    \node<3->[runner,anchor=north west,\idlecolor] at ([shift={(\runnercenterdist,-\runnercenterdist)}]runnersCloud.center){\textrm{A}\\[.5ex]\faServer{}\\[.5ex]Runner 4};
+
+                    % Result
+                    \node[resultsnode,right=1.5cm of runnersCloud](Result){\faDatabase{}\\Database};
+                    \node[above=1ex of Result](ResultLabel){Results};
+
+                    % pipeline
+                    \begin{scope}[on background layer]
+                        \draw[thick] ([xshift=-1ex]Job-1.west) --++ (0cm,-1cm) -- ([xshift=-.5\funnelwidth]PipelineFunnelEnd) |- ([yshift=-.5\funnelwidth,xshift=2pt]runnersCloud.west);
+                        \draw[thick] ([yshift=-.5\funnelwidth,xshift=-2pt]runnersCloud.east) -- ([yshift=-.5\funnelwidth]Result.west);
+                        \draw[thick] ([xshift=1ex]MoreJobs.east) --++ (0cm,-1cm) -- ([xshift=.5\funnelwidth]PipelineFunnelEnd) |- ([yshift=.5\funnelwidth,xshift=2.2pt]runnersCloud.west);
+                        \draw[thick] ([yshift=.5\funnelwidth,xshift=-2.2pt]runnersCloud.east) -- ([yshift=.5\funnelwidth]Result.west);
+                    \end{scope}
+                    \coordinate (PipelineCorner) at (PipelineFunnelEnd |- runnersCloud.west);
+                    \coordinate(PipelineVMid) at ($(PipelineFunnelEnd)!.5!(PipelineCorner)$);
+                    % arrows
+                    \draw[-Latex,dotted] ([yshift=.75cm]PipelineVMid) --++ (0cm,-1.5cm);
+                    \draw[-Latex,dotted] ([xshift=-.75cm]$(PipelineCorner)!.5!(runnersCloud.west)$) --++ (1.5cm,0cm);
+                    \draw[-Latex,dotted] ([xshift=-.5cm]$(runnersCloud.east)!.5!(Result.west)$) --++ (1cm,0cm);
+
+                    % legend
+                    \node[legend] at ([shift={(-1ex,-1ex)}]current bounding box.north east){
+                        \textcolor{\idlecolor}{\makebox[1.5em][l]{\faCircle[regular]{}}Idle}\\%
+                        \textcolor{\runningcolor}{\makebox[1.5em][l]{\faCircle[regular]{}}Running}
+                    };
+                \end{tikzpicture}
+            \end{adjustbox}
+            \caption{Operator Job Queue}
+            \label{fig:operator-job-queue}
+        \end{figure}
+    \end{frame}
+    \subsection{Rubric Format}
+    \begin{frame}
+        \slidehead{}
+        \begin{itemize}
+            \item JSON-based format
+            \item Allows for arbitrarly complex grading schemes
+            \item Supports multiple languages
+            \item Example on the next slide
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]
+        \slidehead{}
+        \vspace{-2em}
+        \begin{grayInfoBox}
+            \fatsf{Assignment:} Write a method fibRec that calculates the n-th Fibonacci number for any given integer n.
+        \end{grayInfoBox}
+        \begin{codeBlock}[fontsize=\footnotesize]{minted language=java,title=\codeBlockTitle{Student implementation}}
+            package test;
+            public class Fibonacci {
+                public static int fibRec(final int n) {
+                    if (n < 0) {
+                        throw new IllegalArgumentException("Parameter n must be greater than or equal to 0, but was " + n);
+                    }
+                    return n < 2 ? n : fibRec(n - 1) + fibRec(n - 2);
+                }
+            }
+        \end{codeBlock}
+    \end{frame}
+    \begin{frame}[fragile]
+        \slidehead{}
+        \vspace{-2em}
+        \begin{codeBlock}[fontsize=\footnotesize]{minted language=json,title=\codeBlockTitle{Resulting rubric}}
+            {
+                "submissionInfo": {},
+                "totalPointsMin": 1,
+                "totalPointsMax": 1,
+                "possiblePointsMax": 2,
+                "criteria": [
+                    // ...
+                ],
+                "tests": [
+                    // ...
+                ]
+            }
+        \end{codeBlock}
+    \end{frame}
+    \begin{frame}[fragile]
+        \begin{codeBlock}[fontsize=\footnotesize]{minted language=json,title=\codeBlockTitle{Resulting rubric}}
+            "criteria": [
+                {
+                    "name": "H4 | Fibonacci",
+                    "archivedPointsMin": 1,
+                    "archivedPointsMax": 1,
+                    "possiblePointsMin": 0,
+                    "possiblePointsMax": 2,
+                    "message": "",
+                    "relevantTests": [
+                        "test1",
+                        "test2"
+                    ],
+                    "children": [
+                        // ...
+                    ]
+                }
+            ],
+        \end{codeBlock}
+    \end{frame}
+    \begin{frame}[fragile]
+        \begin{codeBlock}[fontsize=\footnotesize]{minted language=json,title=\codeBlockTitle{Resulting rubric}}
+            {
+                "name": "Die Methode fibRec() gibt die korrekten Fibonacci-Zahlen zurück für negative Eingaben.",
+                "archivedPointsMin": 0,
+                "archivedPointsMax": 0,
+                "possiblePointsMin": 0,
+                "possiblePointsMax": 1,
+                "message": "<p>Unexpected exception thrown: java.lang.IllegalArgumentException: Parameter n must be greater than or equal to 0, but was -1</p>",
+                "relevantTests": [
+                    "[engine:junit-jupiter]/[class:h01.FibTest]/[method:testFibRecNegative()]"
+                ]
+            }
+        \end{codeBlock}
+    \end{frame}
+    \begin{frame}[fragile]
+        \begin{codeBlock}[fontsize=\footnotesize]{minted language=json,title=\codeBlockTitle{Resulting rubric}}
+            {
+                "id": "[engine:junit-jupiter]/[class:h01.FibTest]/[method:testFibRecPositive()]",
+                "name": "testFibRecPositive()",
+                "type": "TEST",
+                "status": "SUCCESSFUL"
+            },
+        \end{codeBlock}
+    \end{frame}
+    \begin{frame}[fragile]
+        \begin{codeBlock}[fontsize=\footnotesize]{minted language=json,title=\codeBlockTitle{Resulting rubric}}
+            {
+            "id": "[engine:junit-jupiter]/[class:h01.FibTest]/[method:testFibRecNegative()]",
+            "name": "testFibRecNegative()",
+            "type": "TEST",
+            "status": "FAILED",
+            "message": "Unexpected exception thrown: java.lang.IllegalArgumentException: Parameter n must be greater than or equal to 0, but was -1",
+            "stackTrace": "org.opentest4j.AssertionFailedError: Unexpected exception thrown: java.lang.IllegalArgumentException: Parameter n must be greater than or equal to 0, but was -1\n\tat org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)\n\tat ... 7 more\n"
+        }
+        \end{codeBlock}
+    \end{frame}
+    \begin{frame}
+        \begin{figure}[H]
+            \includegraphics[height=.6\paperheight]{example-image-a}
+            \caption{Minimal Rubric View example}
+            \label{fig:minimal-rubric-view}
+        \end{figure}
+    \end{frame}
+    \section{Future Work}
+    \begin{frame}
+        \slidehead{}
+        \begin{itemize}
+            \item do
+            \item re
+            \item mi
+            \item fa
+            \item so
+        \end{itemize}
+    \end{frame}
+
+    % \section{References}
+    % \begin{frame}
+    %     \slidehead{}
+    %     \todo{References}
+    % \end{frame}
+
+    % \section{Live Demo}
+    % \begin{frame}
+    %     \slidehead{}
+    %     \boldimpact{\textcolor{accentcolor}{Live Demo}}
+    % \end{frame}
+
+    \begin{frame}
+        \boldimpact{Thank you for your attention!\\\textmd{Do you have any Questions?}}
+    \end{frame}
+
+    \section{Appendix}
+    \begin{frame}
+        \slidehead{}
+        \vspace{-2em}
+        \begin{figure}
+            \centering
+            \includestandalone[height=.6\paperheight]{user-groups-kiviat-diagram}
+            \caption{Kiviat Diagram of User Groups}
+            \label{fig:user-groups-kiviat-diagram}
+        \end{figure}
+    \end{frame}
+    % TODO: Screenshots of the platform
+    % \begin{frame}
+    %     \slidehead{}
+    %     \vspace{-2em}
+    %     \begin{figure}
+    %         \centering
+    %         \includegraphics[height=.6\paperheight]{dashboard-light.png}
+    %         \caption{Dashboard}
+    %         \label{fig:dashbaord}
+    %     \end{figure}
+    % \end{frame}
+    % \begin{frame}
+    %     \slidehead{}
+    %     \vspace{-2em}
+    %     \begin{figure}
+    %         \centering
+    %         \includegraphics[height=.6\paperheight]{rubric-light.png}
+    %         \caption{Rubric view}
+    %         \label{fig:rubric-view}
+    %     \end{figure}
+    % \end{frame}
+    % \begin{frame}
+    %     \slidehead{}
+    %     \vspace{-2em}
+    %     \begin{figure}
+    %         \centering
+    %         \includegraphics[height=.6\paperheight]{jobs-light.png}
+    %         \caption{Jobs view}
+    %         \label{fig:jobs-view}
+    %     \end{figure}
+    % \end{frame}
+    % \begin{frame}
+    %     \slidehead{}
+    %     \vspace{-2em}
+    %     \begin{figure}
+    %         \centering
+    %         \includegraphics[height=.6\paperheight]{assignment-submissions-light.png}
+    %         \caption{Assignment submissions view}
+    %         \label{fig:assignment-submissions-view}
+    %     \end{figure}
+    % \end{frame}
+\end{document}

@@ -1,0 +1,65 @@
+%!TEX root = ../thesis.tex
+
+% Center Captions
+\captionsetup[figure]{justification=centering}
+\captionsetup[subfigure]{justification=centering}
+\captionsetup[table]{justification=centering}
+
+\makeatletter
+\ExplSyntaxOn
+\IfClassLoadedTF{beamer}{
+    \newcommand*{\progressbarlength}{2em}
+    \newcommand*{\progressbarheight}{1ex}
+    \defbeamertemplate*{footline}{TUDa-progress}
+    {
+        \begin{beamercolorbox}[leftskip=\g__ptxcd_beamer_sep_dim,rightskip=\g__ptxcd_beamer_sep_dim,
+                ht=\csname c_ptxcd_smallrule_dim\endcsname,dp=1mm]{footline}
+            \ptxcd_beamer_rule
+        \end{beamercolorbox}
+        \begin{beamercolorbox}[
+                leftskip=\g__ptxcd_beamer_sep_dim,
+                rightskip=\g__ptxcd_beamer_sep_dim, ht=2.75mm,dp=2.75mm]{footline}
+            \usebeamerfont{author~ in~ head/foot}%
+            \bool_set_false:N \l_ptxcd_tmpa_bool
+            \clist_map_variable:nNn {date, department, institute, author} \l_tmpa_tl {
+                \tl_if_empty:cF {beamer@short\l_tmpa_tl} {
+                    \bool_if:NTF \l_ptxcd_tmpa_bool {~|~}
+                    {\bool_set_true:N \l_ptxcd_tmpa_bool}
+                    \use:c {insertshort\l_tmpa_tl}
+                }
+            }
+            \bool_if:NT \l_ptxcd_tmpa_bool {~|~}
+            Slide~\insertframenumber/\inserttotalframenumber{}~
+            % progress bar with tikz showing the progress
+            % \tikz[]{
+            %     \draw[
+            %         path~picture={
+            %             \draw[draw=none, fill=accentcolor!50] (0,-0.5*\progressbarheight) rectangle (\progressbarlength*\insertframenumber/\inserttotalframenumber,.5*\progressbarheight);
+            %         }
+            %     ] (0,-0.5*\progressbarheight) rectangle (\progressbarlength,0.5*\progressbarheight);
+            % }
+            \hfill\raisebox{\dimexpr-.5\height+\dp\strutbox\relax}{\insertlogo}
+        \end{beamercolorbox}
+    }
+    \setbeamertemplate{footline}[TUDa-progress]
+    \AtBeginSection[]{%
+        \begin{frame}[c]
+            \frametitle{Structure}
+            % \tableofcontents[currentsection, hideothersubsections]{}
+            % this but hide all subsections including the current ones
+            \tableofcontents[currentsection, subsectionstyle=hide/hide]
+            \clearpage
+        \end{frame}
+    }
+}{
+    % make subparagraphs non-bold
+    \let\oldsubparagraph\subparagraph
+    \renewcommand{\subparagraph}[1]{\oldsubparagraph{\textmd{#1}}}
+}
+\ExplSyntaxOff
+\makeatother
+\renewcommand\tabularxcolumn[1]{m{#1}}% for vertical centering text in X column
+
+% Remove unwanted space from tables
+\aboverulesep = 0mm \belowrulesep = 0mm
+\renewcommand{\arraystretch}{1.4}

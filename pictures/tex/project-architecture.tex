@@ -1,0 +1,35 @@
+\documentclass[tikz]{standalone}
+\def\mainPath{../../}
+\RequirePackage{import}
+\subimport{\mainPath/common}{packages}
+\subimport{\mainPath/common}{macros}
+\subimport{\mainPath/common}{style}
+
+\graphicspath{{\mainPath/pictures/}}
+% \faNetworkWired
+% \faCogs
+% \faGlobe
+% \faDesktop
+% \faDatabase
+\begin{document}
+    \tikzset{
+        archnode/.style={draw,rectangle, minimum size=1cm, text width=2cm, align=center},
+    }
+    \begin{tikzpicture}[thick,node distance=1.5cm]
+        \node[archnode](Hub){\faGlobe{}\\Hub};
+        \node[archnode,right=5.5cm of Hub](Operator){\faCogs{}\\Operator};
+        \node[archnode, shift={(0,2.5cm)}] at ($(Hub)!0.5!(Operator)$)(Database){\faDatabase{}\\Database};
+        \node[archnode,below=of Operator](runner-n){\faServer{}\\Runner n};
+        \node[archnode,left=1.5cm of runner-n](runner-2){\faServer{}\\Runner 2};
+        \node[archnode,left=.5cm of runner-2](runner-1){\faServer{}\\Runner 1};
+        \node[] at ($(runner-2)!0.5!(runner-n)$)(runners){\faEllipsisH{}};
+        % arrows
+        \draw[-Latex, transform canvas={yshift=1cm/3}] (Hub) -- (Operator) node[midway,above,align=center]{Rubric, Submissions, Job details};
+        \draw[-Latex, transform canvas={yshift=-1cm/3}] (Operator) -- (Hub) node[midway,above,align=center]{Job status, Results};
+        \draw[-Latex] (Hub.north) -- (Database.west) node[midway,above,align=center,sloped]{Users, Assignments, \\Rubrics, Submissions};
+        \draw[-Latex] (Operator.north) -- (Database.east) node[midway,above,align=center,sloped]{Jobs, Grades};
+        \draw[Latex-Latex] (Operator.south) -- (runner-n.north) node[midway,right,align=center]{Job n, Result n};
+        \draw[Latex-Latex] ([xshift=8mm]Operator.south west) -- (runner-2.north) node[pos=.4,below,align=center,sloped]{Job 2, Result 2};
+        \draw[Latex-Latex] ([xshift=3mm]Operator.south west) -- (runner-1.north) node[midway,above,align=center,sloped]{Job 1, Result 1};
+    \end{tikzpicture}
+\end{document}

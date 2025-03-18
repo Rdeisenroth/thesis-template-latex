@@ -1,0 +1,27 @@
+\documentclass[../thesis.tex]{subfiles}
+
+% Get Labels from the Main Document using the xr-hyper Package
+\externaldocument[ext:]{\subfix{thesis}}
+
+\begin{document}
+
+    \chapter{Introduction}\IMRADlabel{introduction}
+    \lipsum[1]
+    %TODO: Introduction
+    \editornote{This is an editor Note, it can be used to leave comments for the author or other editors. (like, paragraph needs more explanation, or will add figure here)} %TODO: remove this note
+
+    \paragraph{Research Questions}\label{par:research-questions}
+    The main research questions of this thesis are:
+    \begin{enumerate}
+        \item A research question?\label{RQ1}
+            \begin{enumerate}[label*=\arabic*.]
+                \item Subquestion 1?\label{RQ1.1}
+                \item Subquestion 2?\label{RQ1.2}
+                \item subquestion 3?\label{RQ1.3}
+            \end{enumerate}
+    \end{enumerate}
+    % Print the bibliography if this is a standalone document
+    \ifSubfilesClassLoaded{%
+        \printbibliography{}%
+    }{}
+\end{document}
