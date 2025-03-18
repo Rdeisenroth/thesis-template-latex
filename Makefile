@@ -8,7 +8,7 @@ FILES := $(wildcard *.tex)
 # $3: environment variables
 # $4: directory to compile in
 define compile_latex_with_jobname_and_env
-	cd $(4) && $(3) latexmk --shell-escape -synctex=1 -interaction=nonstopmode -file-line-error -lualatex -jobname=$(2) "$(1)"
+	cd $(4) && $(3) latexmk --shell-escape -synctex=1 -interaction=nonstopmode -file-line-error -lualatex -outdir=$(OUT_DIR) -jobname=$(2) "$(1)"
 endef
 
 # Build LaTeX with jobname and environment variables, compile and copy to output directory
@@ -22,7 +22,7 @@ define build_latex_with_jobname_and_env
 	@$(call compile_latex_with_jobname_and_env,$(FILE),$(2),$(3),$(DIR))
 	@echo -e "\e[1;32mSuccessfully compiled \"$(FILE)\" in \"$(DIR)\" with jobname \"$(2)\"$<\e[0m"
 	@mkdir -p $(OUT_DIR)
-	@cp $(DIR)/$(2).pdf $(OUT_DIR)/
+	@cp $(OUT_DIR)/$(2).pdf $(DIR)/
 endef
 
 all:
