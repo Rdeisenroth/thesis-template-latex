@@ -58,7 +58,10 @@
 %%%%%%%%%%%%%%%%%%%
 % TU-Pkgs
 %%%%%%%%%%%%%%%%%%%
-\usepackage{algo-common} % tudalgo template needs to load before regular tu-pkgs
+\usepackage[%
+    boxarc,%
+    fancy_row_color,% enable alternating row colors in tables % TODO: remove this if you don't want it
+]{algo-common} % tudalgo template needs to load before regular tu-pkgs
 \usepackage{tudafonts}
 \usepackage{tudacolors}
 
@@ -85,7 +88,11 @@
 \setuptodonotes{inline,color=TUDa-8a!80}
 \usepackage{tikz,pgfplots}
 \usetikzlibrary{3d, angles, animations, arrows, arrows.meta, arrows.spaced, automata, babel, backgrounds, bending, calc, calendar, chains, circuits.ee.IEC, circuits.logic.CDH, circuits.logic.IEC, circuits.logic.US, datavisualization, datavisualization.formats.functions, datavisualization.polar, decorations, decorations.footprints, decorations.fractals, decorations.markings, decorations.pathmorphing, decorations.pathreplacing, decorations.shapes, decorations.text, er, external, fadings, fit, fixedpointarithmetic, folding, fpu, graphs, graphs.standard, intersections, lindenmayersystems, math, matrix, patterns, patterns.meta, perspective, petri, plotmarks, positioning, quotes, rdf, scopes, shadings, shadows, shadows.blur, shapes, shapes.arrows, shapes.callouts, shapes.gates.logic.IEC, shapes.gates.logic.US, shapes.geometric, shapes.misc, shapes.multipart, shapes.symbols, spy, svg.path, through, tikzmark, topaths, trees, turtle, views}
+\usepackage{silence}
+\WarningFilter[wrongstypath]{latex}{You have requested package }
+\ActivateWarningFilters[wrongstypath]
 \usepackage{extra_pkg/tkz-kiviat} % Kiviat diagrams
+\DeactivateWarningFilters[wrongstypath]
 \usepackage{makecell} % multi-line cells in tables
 \usepackage{lipsum} % dummy text
 \usepackage{subfiles} % has to be loadad as late as possible

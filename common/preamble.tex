@@ -6,14 +6,9 @@
 \DocumentMetadata{
     pdfstandard=a-2b,
     pdfversion=1.7,% 2.0 is possible as well, but some validators don't support that yet
+    lang=en,
 }
-\RequirePackage[%
-    boxarc,%
-    caption_workaround,%
-    minted_workaround,%
-    fancy_row_color% enable alternating row colors in tables % TODO: remove this if you don't want it
-]{algo-common} % my own utility package. This has to be loaded before tudapub for colorspace compatibility
-
+\PassOptionsToPackage{table, dvipsnames, svgnames}{xcolor} % pass xcolor options early so they are picked up by the tudapub class
 \documentclass[
     USenglish,% main language as a global option
     accentcolor=9c,% Choose accent color: For a list of available colors see the full tudapub documentation
