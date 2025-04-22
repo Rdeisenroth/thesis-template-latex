@@ -1,7 +1,7 @@
 #!/bin/bash
 
 search_dir=$1
-pdf_files=$(find $search_dir -maxdepth 1 -type f -name "*.pdf")
+pdf_files=$(find $search_dir -maxdepth 1 -type f -name "*.pdf" ! -name "presentation*.pdf")
 
 # global counters
 total_files=0
