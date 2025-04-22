@@ -1,7 +1,7 @@
 #!/bin/bash
 
 search_dir=$1
-pdf_files=$(find $search_dir -maxdepth 1 -type f -name "*.pdf" ! -name "presentation*.pdf")
+pdf_files=$(find $search_dir -maxdepth 1 -type f -name "*.pdf" ! -name "presentation*.pdf") # TODO: remove presentation exception, if you use the new design. See https://github.com/tudace/tuda_latex_templates/issues/513
 
 # global counters
 total_files=0

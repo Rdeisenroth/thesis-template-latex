@@ -9,10 +9,38 @@ Compared to the [thesis template by Fabian Damken](https://github.com/fdamken/th
 - actions to build and check for PDF/A compliance
 - (optional) action to deploy the PDF to a WebDAV server (like Next-Hessenbox)
 - better file structure
-- the ability to compile individual chapters or figures, or the whole document (really nice if your thesis is 100+ pages and you just want to layout one chapter, but sometimes does not work with code listings)
+- the ability to compile individual chapters or figures, or the whole document (really nice if your thesis is 100+ pages and you just want to edit one chapter, which compiles in seconds rather than minutes)
 - no copyright violating TU-Logo in the files ;)
 - a presentation template as well
-- all of my accumulated \LaTeX-Macros i used in my thesis
+- all of my accumulated $\LaTeX$-Macros i used in my thesis
+
+## Directory structure
+```bash
+.
+├── chapters # the individual chapter files
+├── code # code files, or submodules
+├── common # template stuff shared between files
+│   ├── extra_pkg # additional packages
+│   │   └── tkz-kiviat.sty # a package for drawing Kiviat diagrams
+│   ├── macros.tex # define own macros here
+│   ├── metadata.tex # metadata for the thesis
+│   ├── packages.tex # packages used in the thesis
+│   ├── preamble.tex # the preamble for the main document
+│   ├── refs.bib # bibliography file
+│   └── style.tex # additional style overrides (e.g. for the beamer progress bar)
+├── latexindent.yaml # linter settings
+├── LICENSE # AGPL-3.0 license
+├── Makefile # akefile for building the document
+├── pictures # pictures to be included in the document
+│   ├── dummy-signature.png
+│   ├── moodle_favicon.svg
+│   └── tex # tex-files for the figures
+│       ├── project-architecture.tex
+│       └── user-groups-kiviat-diagram.tex
+├── presentation.tex # the final presentation document
+├── README.md # this file
+└── thesis.tex # the main thesis document
+```
 
 ## Automatisches Setup (empfohlen)
 ### Lokal (Devcontainer)
