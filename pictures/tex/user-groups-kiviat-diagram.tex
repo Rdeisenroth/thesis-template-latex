@@ -6,10 +6,6 @@
 \subimport{\mainPath/common}{style}
 
 \graphicspath{{\mainPath/pictures/}}
-% color fix for dark mode
-\IfDarkModeT{%
-    \selectcolormodel{cmyk}
-}
 % Kiviat diagram showing the skills of the different user groups expected to use the system. We have three main user groups: Admin, Instructor and Student. Each user group has a set of skills that are relevant to the system. The skills are: Programming, Statistics, Data Analysis, Machine Learning, and System Administration. The skills are rated from 0 to 5, where 0 is no knowledge and 5 is expert knowledge. The diagram is divided into three sections, one for each user group. The skills are represented by the vertices of the diagram, and the rating is represented by the distance from the center of the diagram. The diagram is color-coded to show the different user groups.
 \begin{document}
     \begin{tikzpicture}

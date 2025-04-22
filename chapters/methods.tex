@@ -2,7 +2,7 @@
 
 % Get Labels from the Main Document using the xr-hyper Package
 \externaldocument[ext:]{\subfix{thesis}}
-\graphicspath{{\subfix{pictures/}}}
+\graphicspath{{\subfix{pictures}}{\subfix{pictures/tex}}}
 
 
 \begin{document}
@@ -15,7 +15,7 @@
     % Standalone LaTeX figure
     \begin{figure}[ht!]
         \centering
-        \includestandalone{user-groups-kiviat-diagram} % this breaks the subfile package for some reason
+        \includestandalone{user-groups-kiviat-diagram}
         \caption{Kiviat diagram showing the skills of the different user groups expected to use the system}
         \label{fig:user-groups-kiviat-diagram}
     \end{figure}

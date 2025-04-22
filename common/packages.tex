@@ -39,7 +39,6 @@
 % References
 %%%%%%%%%%%%%%%%%%%
 \usepackage{standalone}
-\usepackage{subfiles}
 \usepackage{import}
 \usepackage{hyperref}              % basic references
 \usepackage[capitalize]{cleveref}  % better references
@@ -59,14 +58,13 @@
 %%%%%%%%%%%%%%%%%%%
 % TU-Pkgs
 %%%%%%%%%%%%%%%%%%%
+\usepackage{algo-common} % tudalgo template needs to load before regular tu-pkgs
 \usepackage{tudafonts}
 \usepackage{tudacolors}
-
 
 %%%%%%%%%%%%%%%%%%%
 % Other packages
 %%%%%%%%%%%%%%%%%%%
-\usepackage{algo-common}
 \usepackage{fontawesome5}
 \usepackage{placeins}
 \usepackage{adjustbox}
@@ -90,3 +88,4 @@
 \usepackage{extra_pkg/tkz-kiviat} % Kiviat diagrams
 \usepackage{makecell} % multi-line cells in tables
 \usepackage{lipsum} % dummy text
+\usepackage{subfiles} % has to be loadad as late as possible
