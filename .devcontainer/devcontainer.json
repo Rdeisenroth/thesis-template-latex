@@ -15,7 +15,6 @@
                 "stkb.rewrap", // rewrap comments after n characters on one line
                 "dangmai.workspace-default-settings",
                 // Other
-                "vscode-icons-team.vscode-icons",
                 "draivin.hsnips",
                 "valentjn.vscode-ltex"
             ],
