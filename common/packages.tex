@@ -58,10 +58,12 @@
 %%%%%%%%%%%%%%%%%%%
 % TU-Pkgs
 %%%%%%%%%%%%%%%%%%%
-\usepackage[%
-    boxarc,%
-    fancy_row_color,% enable alternating row colors in tables % TODO: remove this if you don't want it
-]{algo-common} % tudalgo template needs to load before regular tu-pkgs
+\IfClassLoadedTF{algoslides}{}{
+    \usepackage[%
+        boxarc,%
+        fancy_row_color,% enable alternating row colors in tables % TODO: remove this if you don't want it
+    ]{algo-common} % tudalgo template needs to load before regular tu-pkgs
+}
 \usepackage{tudafonts}
 \usepackage{tudacolors}
 
