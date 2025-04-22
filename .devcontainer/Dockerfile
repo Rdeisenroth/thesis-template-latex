@@ -1,8 +1,8 @@
 FROM ghcr.io/tudalgo/algotex:latest
 
-# install pre-commit
+# install packages
 RUN apt-get update \
-    && apt-get -y install pre-commit sudo
+    && apt-get -y install pre-commit sudo openssh-server openssh-client
 
 # setup non-root user
 ARG USERNAME=vscode
