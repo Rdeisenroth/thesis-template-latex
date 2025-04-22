@@ -83,7 +83,7 @@ clean:
 	$(call remove_files,**/*.xmpi)
 	$(call remove_files,**/*.run.xml)
 	$(call remove_files,**/*.bak[0-9]*)
-	$(call remove_files,**/_minted-*)
+	$(call remove_files,**/_minted*)
 	$(call remove_files,**/svg-inkscape)
 	$(call remove_files,**/*.pdfa-*-complience.*)
 	$(call remove_files,**/*.loc)
