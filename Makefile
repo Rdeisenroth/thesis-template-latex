@@ -87,6 +87,8 @@ clean:
 	$(call remove_files,**/svg-inkscape)
 	$(call remove_files,**/*.pdfa-*-complience.*)
 	$(call remove_files,**/*.loc)
+	$(call remove_files,**/*.lof)
+	$(call remove_files,**/*.lot)
 	$(call remove_files,**/*.lol)
 	@echo -e "\e[1;44mDone cleaning up leftover build files.$<\e[0m"
 
