@@ -1,5 +1,14 @@
 # LaTeX-Thesis-Template
 
+# ⚠️ This repo-template has been merged with my other LaTeX-Repo Templates at <br> https://github.com/Rdeisenroth/latex-repo-templates ⚠️
+### Click [here](https://github.com/Rdeisenroth/latex-repo-templates#latex-repo-templates) to view instructions on how to use the new template repository. 
+In the new Repo, this template was renamed to `thesis_tuda`, and you may want to check out the new `seminar_acmart` as well.
+
+> This Repository will remain archived for now.
+
+---
+
+---
 This repository contains my Bachelor Theis Template. It is primarily thought to be used with git and Vscode, but should work with sharelatex as well (though you have to import the dependencies manually).  
 Parts of this template are excerpts from my Bachelor Thesis, so you might find some references to it. Please do not copy the provided fillter texts 1:1, as you might get into trouble with plagiarism, but you likely already know that.  
 
